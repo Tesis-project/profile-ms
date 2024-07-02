@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { envs } from './core/config/envs';
+import { MicroserviceOptions, RpcException, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
 
@@ -40,6 +41,6 @@ async function bootstrap() {
     }));
 
     await app.listen();
-    logger.log(`[Profile-MS] Microservice is running`);
+    logger.log(`Microservice is running`);
 }
 bootstrap();
