@@ -1,8 +1,8 @@
 
 import { Entity, Property } from "@mikro-orm/core";
-import { TempoHandler } from '@tesis-project/dev-globals/dist/classes';
+import { TempoHandler } from '@tesis-project/dev-globals/dist/core/classes';
 import { Schema_key } from "../../../core/entities_global";
-import { File_Model_I } from "@tesis-project/dev-globals/dist/interfaces";
+import { File_Model_I } from "@tesis-project/dev-globals/dist/core/interfaces";
 import { Profile_I } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 
 /*

@@ -37,7 +37,7 @@
         "joi": "^17.13.1",
         "nats": "^2.26.0",
         "reflect-metadata": "^0.1.13",
-        "@tesis-project/dev-globals": "^1.0.710",
+        "@tesis-project/dev-globals": "^1.0.716",
         "rxjs": "^7.2.0",
         "uuid": "^10.0.0"
     },
