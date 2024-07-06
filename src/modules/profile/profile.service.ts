@@ -7,6 +7,7 @@ import { ExceptionsHandler } from '../../core/helpers';
 import { Profile_RepositoryService } from './entities/profile.repository.service';
 import { _Response_I } from '@tesis-project/dev-globals/dist/core/interfaces';
 import { RpcException } from '@nestjs/microservices';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class ProfileService {
@@ -33,10 +34,7 @@ export class ProfileService {
         try {
 
             const f_em = this.em.fork();
-            const resp_user = await this._Profile_RepositoryService.find_one({
-                find: { user },
-                _em: f_em
-            });
+            const resp_user = await this._Profile_RepositoryService.findOne( user );
 
             if (resp_user) {
                 _Response = {
@@ -49,9 +47,14 @@ export class ProfileService {
             }
 
             const new_profile = await this._Profile_RepositoryService.create_profile({
-                save: createProfileDto,
+                save: {
+                    ...createProfileDto,
+                    _id: uuid.v4()
+                },
                 _em: f_em
             });
+
+            f_em.flush();
 
             _Response = {
                 ok: true,
@@ -79,10 +82,9 @@ export class ProfileService {
         try {
 
             const f_em = this.em.fork();
-            const profile = await this._Profile_RepositoryService.find_one({
-                find: { _id },
-                _em: f_em
-            });
+            const profile = await this._Profile_RepositoryService.findOne(
+                { _id }
+            );
 
             if (!profile) {
                 throw new RpcException({
@@ -117,10 +119,7 @@ export class ProfileService {
         try {
 
             const f_em = this.em.fork();
-            const resp_profile = await this._Profile_RepositoryService.find_one({
-                find: { _id },
-                _em: f_em
-            });
+            const resp_profile = await this._Profile_RepositoryService.findOne({ _id });
 
             if (!resp_profile) {
                 throw new RpcException({
@@ -136,6 +135,8 @@ export class ProfileService {
                 update: updateProfileDto,
                 _em: f_em
             });
+
+            f_em.flush();
 
             _Response = {
                 ok: true,

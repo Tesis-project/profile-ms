@@ -17,21 +17,15 @@ export class Profile_RepositoryService extends EntityRepository<Profile_Ety> {
     constructor(
         em: EntityManager,
     ) {
-        super(em, Profile_Ety);
+        super(em.fork(), Profile_Ety);
     }
 
 
     async create_profile({ save, _em }: _Process_Save_I<Profile_Ety>): Promise<Profile_Ety> {
 
         const new_profile = await _em.create(Profile_Ety, save);
-        await _em.persistAndFlush(new_profile);
+        await _em.persist(new_profile);
         return new_profile;
-
-    }
-
-    async find_one({ find, options, _em }: _Find_One_I<Profile_Ety, 'Profile_Ety'>): Promise<Profile_Ety> {
-
-        return await _em.findOne(Profile_Ety, find, options);
 
     }
 
@@ -67,13 +61,13 @@ export class Profile_RepositoryService extends EntityRepository<Profile_Ety> {
 
     async delete_profile({ find, _em }: _Process_Delete_I<Profile_Ety>): Promise<boolean> {
 
-        const profile_find = await this.find_one({find, _em});
+        const profile_find = await this.findOne(find);
 
         if (!profile_find) {
             throw new Error('profile not found');
         }
 
-        await _em.removeAndFlush(profile_find);
+        await _em.remove(profile_find);
         return true;
 
     }
@@ -81,14 +75,14 @@ export class Profile_RepositoryService extends EntityRepository<Profile_Ety> {
     async update_profile({ find, update, _em}: _Process_Update_I<Profile_Ety>): Promise<Profile_Ety> {
 
 
-        const profile_find = await this.find_one({find, _em});
+        const profile_find = await this.findOne(find);
 
         if (!profile_find) {
             throw new Error('profile not found');
         }
 
         Object.assign(profile_find, update);
-        await _em.persistAndFlush(profile_find);
+        await _em.persist(profile_find);
         return profile_find;
 
     }
