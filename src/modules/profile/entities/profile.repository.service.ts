@@ -67,9 +67,10 @@ export class Profile_RepositoryService extends EntityRepository<Profile_Ety> {
             throw new Error('profile not found');
         }
 
-        await _em.remove(profile_find);
+         await _em.nativeDelete(Profile_Ety, {
+            _id: profile_find._id
+        });
         return true;
-
     }
 
     async update_profile({ find, update, _em}: _Process_Update_I<Profile_Ety>): Promise<Profile_Ety> {

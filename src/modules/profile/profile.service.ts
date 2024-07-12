@@ -81,9 +81,13 @@ export class ProfileService {
 
         try {
 
-            const f_em = this.em.fork();
-            const profile = await this._Profile_RepositoryService.findOne(
-                { _id }
+            let profile = await this._Profile_RepositoryService.findOne(
+                {
+                    $or: [
+                        { _id },
+                        { user: _id }
+                    ]
+                },
             );
 
             if (!profile) {
