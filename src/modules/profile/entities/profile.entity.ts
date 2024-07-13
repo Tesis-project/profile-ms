@@ -2,8 +2,9 @@
 import { Entity, Property } from "@mikro-orm/core";
 import { TempoHandler } from '@tesis-project/dev-globals/dist/core/classes';
 import { Schema_key } from "../../../core/entities_global";
-import { File_Model_I } from "@tesis-project/dev-globals/dist/core/interfaces";
+
 import { Profile_I } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
+import { Media_I } from "@tesis-project/dev-globals/dist/modules/media/interfaces";
 
 /*
 export interface Profile_I extends SchemaKey_I {
@@ -54,13 +55,13 @@ export class Profile_Ety extends Schema_key {
         type: 'jsonb',
         nullable: true,
     })
-    profile_pic?: File_Model_I;
+    profile_pic?: Media_I;
 
     @Property({
         type: 'jsonb',
         nullable: true,
     })
-    cover_pic?: File_Model_I;
+    cover_pic?: Media_I;
 
     @Property({
         type: 'jsonb',
