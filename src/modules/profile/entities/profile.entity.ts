@@ -6,32 +6,6 @@ import { Schema_key } from "../../../core/entities_global";
 import { Profile_I } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 import { Media_I } from "@tesis-project/dev-globals/dist/modules/media/interfaces";
 
-/*
-export interface Profile_I extends SchemaKey_I {
-    artistic_name: string;
-    bio_short: string;
-    profile_pic: File_Model_I;
-    cover_pic: File_Model_I;
-    credentials: {
-        identity_file?: File_Model_I;
-        profesional_file?: File_Model_I;
-    };
-    media: {
-        image_gallery?: File_Model_I[];
-        video_gallery?: File_Model_I[];
-    };
-    socials: {
-        facebook?: string;
-        twitter?: string;
-        instagram?: string;
-        youtube?: string;
-        tiktok?: string;
-    };
-    user?: User_I;
-
-    updated_at?: Date;
-}
- */
 
 @Entity({
     tableName: 'profile',
