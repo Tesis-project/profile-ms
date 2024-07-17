@@ -413,7 +413,7 @@ export class ProfileService {
 
             let uploaded_file: _Response_I<Media_I>;
 
-            if (!credentials?.profesional_file || !credentials?.profesional_file?._id || !credentials?.profesional_file?.cloud_file_id) {
+            if (!credentials?.profesional_file || !credentials?.profesional_file?._id ) {
 
                 uploaded_file = await this._MediaService_GW.create_media(file, Create_Media_Dto, user_auth);
 
@@ -502,7 +502,7 @@ export class ProfileService {
 
             let uploaded_file: _Response_I<Media_I>;
 
-            if (!credentials?.identity_file || !credentials?.identity_file?._id || !credentials?.identity_file?.cloud_file_id) {
+            if (!credentials?.identity_file || !credentials?.identity_file?._id ) {
 
                 uploaded_file = await this._MediaService_GW.create_media(file, Create_Media_Dto, user_auth);
 
@@ -580,7 +580,7 @@ export class ProfileService {
 
             let uploaded_pic: _Response_I<Media_I>;
 
-            if (!cover_pic || !cover_pic?._id || !cover_pic?.cloud_file_id) {
+            if (!cover_pic || !cover_pic?._id) {
 
                 uploaded_pic = await this._MediaService_GW.create_media(file, Create_Media_Dto, user_auth);
 
@@ -657,14 +657,14 @@ export class ProfileService {
 
             let uploaded_pic: _Response_I<Media_I>;
 
-            if (!profile_pic || !profile_pic?._id || !profile_pic?.cloud_file_id) {
+            if (!profile_pic || !profile_pic?._id) {
 
                 uploaded_pic = await this._MediaService_GW.create_media(file, Create_Media_Dto, user_auth);
 
 
             } else {
 
-                const id: string = profile_pic?._id || profile_pic?.cloud_file_id;
+                const id: string = profile_pic?._id;
                 uploaded_pic = await this._MediaService_GW.update_media(id, file, user_auth);
 
             }
