@@ -18,6 +18,17 @@ export class MediaService_GW {
 
     }
 
+    async get_mediaMeta(_id: string): Promise<_Response_I<Media_I>> {
+
+        const resp = await firstValueFrom<_Response_I<Media_I>>(
+            this.client.send('media.get_meta.file', {
+                _id,
+            })
+        )
+        return resp
+
+    }
+
     async create_media(file: Express.Multer.File, Create_Media_Dto: Create_Media_Dto, user_auth: Auth_User_I_Dto): Promise<_Response_I<Media_I>> {
 
         const resp = await firstValueFrom<_Response_I<Media_I>>(

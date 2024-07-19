@@ -167,7 +167,7 @@ export class ProfileService {
 
             profile.media.video_gallery.push({
                 _id: uploaded_file.data._id,
-             });
+            });
 
             profile.media.video_gallery = profile.media.video_gallery.map(video => ({
                 _id: video._id
@@ -338,7 +338,7 @@ export class ProfileService {
 
             profile.media.image_gallery.push({
                 _id: uploaded_file.data._id,
-             });
+            });
 
             profile.media.image_gallery = profile.media.image_gallery.map(img => ({
                 _id: img._id
@@ -413,7 +413,7 @@ export class ProfileService {
 
             let uploaded_file: _Response_I<Media_I>;
 
-            if (!credentials?.profesional_file || !credentials?.profesional_file?._id ) {
+            if (!credentials?.profesional_file || !credentials?.profesional_file?._id) {
 
                 uploaded_file = await this._MediaService_GW.create_media(file, Create_Media_Dto, user_auth);
 
@@ -428,7 +428,7 @@ export class ProfileService {
                 ...credentials,
                 profesional_file: {
                     _id: uploaded_file.data._id,
-                 }
+                }
             };
 
             await this._Profile_RepositoryService.update_profile({
@@ -502,7 +502,7 @@ export class ProfileService {
 
             let uploaded_file: _Response_I<Media_I>;
 
-            if (!credentials?.identity_file || !credentials?.identity_file?._id ) {
+            if (!credentials?.identity_file || !credentials?.identity_file?._id) {
 
                 uploaded_file = await this._MediaService_GW.create_media(file, Create_Media_Dto, user_auth);
 
@@ -517,7 +517,7 @@ export class ProfileService {
                 ...credentials,
                 identity_file: {
                     _id: uploaded_file.data._id,
-                 }
+                }
             };
 
             await this._Profile_RepositoryService.update_profile({
@@ -593,7 +593,7 @@ export class ProfileService {
 
             profile.cover_pic = {
                 _id: uploaded_pic.data._id,
-             };
+            };
 
             await this._Profile_RepositoryService.update_profile({
                 find: { _id: profile._id },
@@ -671,7 +671,7 @@ export class ProfileService {
 
             profile.profile_pic = {
                 _id: uploaded_pic.data._id,
-             };
+            };
 
             await this._Profile_RepositoryService.update_profile({
                 find: { _id: profile._id },
@@ -767,6 +767,63 @@ export class ProfileService {
                     ]
                 },
             );
+
+            if (profile.profile_pic?._id) {
+                const profile_pic = await this._MediaService_GW.get_mediaMeta(profile.profile_pic?._id);
+                profile.profile_pic = {
+                    ...profile_pic.data
+                }
+            }
+
+            if(profile.credentials) {
+
+                const cred = profile.credentials;
+                if(cred.identity_file?._id) {
+                    const identity_file = await this._MediaService_GW.get_mediaMeta(cred.identity_file?._id);
+                    cred.identity_file = {
+                        ...identity_file.data
+                    }
+                }
+                if(cred.profesional_file?._id) {
+                    const profesional_file = await this._MediaService_GW.get_mediaMeta(cred.profesional_file?._id);
+                    cred.profesional_file = {
+                        ...profesional_file.data
+                    }
+                }
+
+                profile.credentials = {
+                    ...cred
+                }
+
+            }
+
+            if(profile.media) {
+
+                const media = profile.media;
+
+                if(media.image_gallery) {
+                    media.image_gallery = await Promise.all(media.image_gallery.map(async img => {
+                        const image = await this._MediaService_GW.get_mediaMeta(img._id);
+                        return {
+                            ...image.data
+                        }
+                    }))
+                }
+
+                if(media.video_gallery) {
+                    media.video_gallery = await Promise.all(media.video_gallery.map(async video => {
+                        const vid = await this._MediaService_GW.get_mediaMeta(video._id);
+                        return {
+                            ...vid.data
+                        }
+                    }))
+                }
+
+                profile.media = {
+                    ...media
+                }
+
+            }
 
             if (!profile) {
                 throw new RpcException({
