@@ -1,10 +1,11 @@
 
-import { Entity, Property } from "@mikro-orm/core";
+import { Entity, OneToOne, Property, Rel } from "@mikro-orm/core";
 import { TempoHandler } from '@tesis-project/dev-globals/dist/core/classes';
 import { Schema_key } from "../../../core/entities_global";
 
 import { Profile_I } from "@tesis-project/dev-globals/dist/modules/profile/interfaces";
 import { Media_I } from "@tesis-project/dev-globals/dist/modules/media/interfaces";
+import { MetaRole_Ety } from "../../meta-role/entities/meta-role.entity";
 
 
 @Entity({
@@ -75,6 +76,9 @@ export class Profile_Ety extends Schema_key {
         unique: true
     })
     user: any;
+
+    @OneToOne(() => MetaRole_Ety, meta => meta.profile, { mappedBy: 'profile', orphanRemoval: true })
+    meta: Rel<MetaRole_Ety>;
 
     @Property({
         type: 'timestamp',
