@@ -755,6 +755,7 @@ export class ProfileService {
     }
 
     async findOne(_id: string) {
+
         let _Response: _Response_I;
 
         try {
@@ -766,6 +767,10 @@ export class ProfileService {
                         { user: _id }
                     ]
                 },
+                {
+                    populate: [ 'meta.meta_artist', 'meta.meta_contratist']
+                }
+                ,
             );
 
             if (profile.profile_pic?._id) {

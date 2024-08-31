@@ -1,5 +1,5 @@
 
-import { Controller } from '@nestjs/common';
+import { Controller, ParseUUIDPipe } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { Auth_User_I_Dto } from '@tesis-project/dev-globals/dist/modules/auth/dto';
@@ -11,11 +11,21 @@ export class MetaRoleController {
     constructor(private readonly metaRoleService: MetaRoleService) { }
 
     @MessagePattern('profile.meta.get')
-    set_metaContratist(
+    find_oneMetaRole(
         @Payload('user_auth') user_auth: Auth_User_I_Dto
     ) {
 
         return this.metaRoleService.find_oneMetaRole(user_auth);
     }
+
+
+
+    // @MessagePattern('profile.meta.get_byProfileId')
+    // find_oneMetaRole_byProfileId(
+    //     @Payload('id', ParseUUIDPipe) _id: string
+    // ) {
+
+    //     return this.metaRoleService.find_oneMetaRole_byProfileId(_id);
+    // }
 
 }

@@ -23,10 +23,6 @@ export class MetaRoleService {
 
     }
 
-    /*   create(createMetaRoleDto: CreateMetaRoleDto) {
-        return 'This action adds a new metaRole';
-      } */
-
     async find_oneMetaRole(user_auth: Auth_User_I_Dto): Promise<_Response_I<MetaRole_Ety>> {
 
         let _Response: _Response_I<MetaRole_Ety>;

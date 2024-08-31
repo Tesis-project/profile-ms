@@ -12,6 +12,7 @@ import { MetaArtist_Ety } from '../entities/meta-artists.entity';
 import { MetaArtist_Models } from '@tesis-project/dev-globals/dist/modules/profile/models';
 
 import * as uuid from 'uuid';
+import { userArtist_Type } from '@tesis-project/dev-globals/dist/modules/profile/interfaces';
 
 
 @Injectable()
@@ -26,6 +27,82 @@ export class MetaArtistsService {
         private readonly _MetaArtists_Repository: MetaArtists_Repository,
         private readonly em: EntityManager,
     ) {
+
+    }
+
+    async get_artist_identify(profile_id: string): Promise<_Response_I<userArtist_Type[]>> {
+
+        let _Response: _Response_I<userArtist_Type[]>;
+
+        let typeSkill: userArtist_Type[] = [
+            'all'
+        ];
+
+        try {
+
+            let meta_role = await this._MetaRole_Repository.findOne({
+                profile: profile_id
+            }, {
+                populate: ['meta_artist']
+            });
+
+            if(!meta_role) {
+
+                _Response = {
+                    ok: false,
+                    data: null,
+                    statusCode: HttpStatus.NOT_FOUND,
+                    message: 'Datos meta no encontrado'
+                }
+                throw new RpcException(_Response)
+
+            }
+
+            const { skills } = meta_role.meta_artist;
+
+            const { singer, instrumentist, scenes_director, orquests_director } = skills;
+            if (singer.voice_specialty && singer.voice_specialty.length > 0 || singer.voice_type && singer.voice_type.length > 0) {
+                typeSkill.push('singer');
+            }
+
+            if(
+                instrumentist.categories && instrumentist.categories.length > 0 ||
+                instrumentist.position && instrumentist.position.length > 0 ||
+                instrumentist.specialty && instrumentist.position.length > 0
+            ) {
+                typeSkill.push('instrumentist');
+            }
+
+            if(
+                scenes_director.specialty && scenes_director.specialty.length > 0 ||
+                scenes_director.repertoire && scenes_director.repertoire.length > 0
+            ) {
+                typeSkill.push('scene_director');
+            }
+
+            if(
+                orquests_director.specialty && orquests_director.specialty.length > 0 ||
+                orquests_director.repertoire && orquests_director.repertoire.length > 0
+            ) {
+                typeSkill.push('orchestra_director');
+            }
+
+
+        _Response = {
+            ok: true,
+            data: typeSkill,
+            statusCode: HttpStatus.OK,
+            message: 'Tipo de artista identificado',
+        }
+
+        } catch (error) {
+
+            this.logger.error(`[Get artist identify] Error: ${error}`);
+            this.ExceptionsHandler.EmitException(error, `${this.service}.get_artist_identify`);
+
+        }
+
+        return _Response;
 
     }
 
