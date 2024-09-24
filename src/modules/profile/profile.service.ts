@@ -780,6 +780,13 @@ export class ProfileService {
                 }
             }
 
+            if (profile.cover_pic?._id) {
+                const cover_pic = await this._MediaService_GW.get_mediaMeta(profile.cover_pic?._id);
+                profile.cover_pic = {
+                    ...cover_pic.data
+                }
+            }
+
             if(profile.credentials) {
 
                 const cred = profile.credentials;

@@ -29,9 +29,7 @@ export class ProfileController {
 
     @MessagePattern('profile.update')
     update(@Payload() Update_Profile_Dto: Update_Profile_Dto) {
-
         return this.profileService.update(Update_Profile_Dto._id, Update_Profile_Dto);
-
     }
 
     @MessagePattern('profile.profile_pic.media')
@@ -39,9 +37,7 @@ export class ProfileController {
         @Payload('file') file: Express.Multer.File,
         @Payload('user_auth') user_auth: Auth_User_I_Dto
     ) {
-
         return this.profileService.set_profile_pic(file, user_auth);
-
     }
 
     @MessagePattern('profile.profile_cover.media')
@@ -49,9 +45,7 @@ export class ProfileController {
         @Payload('file') file: Express.Multer.File,
         @Payload('user_auth') user_auth: Auth_User_I_Dto
     ) {
-
         return this.profileService.set_profile_cover(file, user_auth);
-
     }
 
     @MessagePattern('profile.credentials_identity_file.media')
@@ -59,9 +53,7 @@ export class ProfileController {
         @Payload('file') file: Express.Multer.File,
         @Payload('user_auth') user_auth: Auth_User_I_Dto
     ) {
-
         return this.profileService.set_credentials_identity_file(file, user_auth);
-
     }
 
     @MessagePattern('profile.profesional_file.media')
@@ -69,9 +61,7 @@ export class ProfileController {
         @Payload('file') file: Express.Multer.File,
         @Payload('user_auth') user_auth: Auth_User_I_Dto
     ) {
-
         return this.profileService.set_profesional_file(file, user_auth);
-
     }
 
     @MessagePattern('profile.image_gallery.media.add')
@@ -79,9 +69,7 @@ export class ProfileController {
         @Payload('file') file: Express.Multer.File,
         @Payload('user_auth') user_auth: Auth_User_I_Dto
     ) {
-
         return this.profileService.add_image_gallery(file, user_auth);
-
     }
 
     @MessagePattern('profile.image_gallery.media.remove')
@@ -89,9 +77,7 @@ export class ProfileController {
         @Payload('_id', ParseUUIDPipe) _id: string,
         @Payload('user_auth') user_auth: Auth_User_I_Dto
     ) {
-
         return this.profileService.remove_image_gallery(_id, user_auth);
-
     }
 
     @MessagePattern('profile.video_gallery.media.add')
@@ -109,9 +95,7 @@ export class ProfileController {
         @Payload('_id', ParseUUIDPipe) _id: string,
         @Payload('user_auth') user_auth: Auth_User_I_Dto
     ) {
-
         return this.profileService.remove_video_gallery(_id, user_auth);
-
     }
 
 

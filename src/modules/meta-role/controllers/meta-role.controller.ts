@@ -19,13 +19,4 @@ export class MetaRoleController {
     }
 
 
-
-    // @MessagePattern('profile.meta.get_byProfileId')
-    // find_oneMetaRole_byProfileId(
-    //     @Payload('id', ParseUUIDPipe) _id: string
-    // ) {
-
-    //     return this.metaRoleService.find_oneMetaRole_byProfileId(_id);
-    // }
-
 }
