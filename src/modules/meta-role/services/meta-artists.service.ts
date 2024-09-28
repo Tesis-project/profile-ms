@@ -46,6 +46,7 @@ export class MetaArtistsService {
                 populate: ['meta_artist']
             });
 
+
             if(!meta_role) {
 
                 _Response = {
